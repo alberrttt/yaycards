@@ -1,12 +1,53 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Font declarations */
+@font-face {
+    font-family: 'Roboto';
+    src: url('/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('/Roboto/static/Roboto_Condensed-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('/Roboto/static/Roboto_Condensed-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --font-roboto: 'Roboto', sans-serif;
+}
 
 @layer base {
     html {
         scroll-behavior: smooth;
+        @apply bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-50;
     }
 
     body {
         font-feature-settings: "rlig" 1, "calt" 1;
+
+        @apply font-roboto;
     }
 
     * {
@@ -22,11 +63,11 @@
 
     /* Container styles */
     .card-container {
-        @apply rounded-xl p-4 bg-amber-50;
+        @apply rounded-xl p-4 bg-amber-50/20 dark:bg-amber-800/1;
     }
 
     .card-container-accent {
-        @apply rounded-xl p-4 bg-amber-100;
+        @apply rounded-xl p-4 bg-amber-100 dark:bg-amber-400;
     }
 
     /* Transition styles */
@@ -57,7 +98,7 @@
     }
 
     .btn-primary {
-        @apply rounded-lg p-3 px-5 bg-amber-100 transition-colors;
+        @apply rounded-lg p-3 px-5 dark:bg-amber-700 transition-colors text-stone-900 bg-amber-100 hover:bg-amber-600 dark:hover:bg-amber-800 dark:text-white;
     }
 
     /* Icon item styles */
@@ -67,7 +108,7 @@
 
     /* Panel styles */
     .sidebar-panel {
-        @apply px-2 py-1 rounded-lg bg-orange-400/20;
+        @apply px-2 py-1 rounded-lg bg-orange-200 dark:bg-orange-700;
     }
 
     .header-panel {

@@ -35,7 +35,7 @@
         <p class="pl-1">yaycards</p>
         <Tip title="Toggle sidebar">
             <button class="btn" onclick={toggle_sidebar}>
-                <ArrowLeftToLine />
+                <ArrowLeftToLine strokeWidth={1.5} />
             </button>
         </Tip>
     </div>

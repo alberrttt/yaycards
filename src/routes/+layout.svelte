@@ -3,6 +3,12 @@
     import Sidebar from "../components/Sidebar.svelte";
     import Header from "../components/Header.svelte";
     import { sidebarVisible } from "../stores/sidebar";
+    import { initTheme } from "../stores/theme";
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        initTheme();
+    });
 </script>
 
 <div
