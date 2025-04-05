@@ -1,21 +1,16 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import Book from "./Book.svelte";
+    import { ArrowRight, Book, MoveRight, Plus } from "@lucide/svelte";
+    import type { Deck } from "../types";
+    import DeckItem from "./DeckItem.svelte";
 
     // Define the deck type interface
-    interface Deck {
-        id: string;
-        name: string;
-        subDecks?: Deck[];
-        isOpen?: boolean;
-    }
 
     // Example data - replace with your actual data source
-    let decks: Deck[] = [
+    let decks = $state<Deck[]>([
         {
             id: "1",
             name: "Mathematics",
-            isOpen: false,
             subDecks: [
                 { id: "1-1", name: "Algebra" },
                 { id: "1-2", name: "Geometry" },
@@ -25,7 +20,6 @@
         {
             id: "2",
             name: "Languages",
-            isOpen: false,
             subDecks: [
                 { id: "2-1", name: "English" },
                 { id: "2-2", name: "Spanish" },
@@ -35,30 +29,29 @@
         {
             id: "3",
             name: "History",
-            isOpen: false,
             subDecks: [
                 { id: "3-1", name: "Ancient" },
                 { id: "3-2", name: "Medieval" },
                 { id: "3-3", name: "Modern" },
             ],
         },
-    ];
-
-    // Function to toggle deck open/close state
-    function toggleDeck(deck: Deck) {
-        deck.isOpen = !deck.isOpen;
-        decks = [...decks]; // Trigger reactivity
-    }
-
-    // Function to select a deck
-    function selectDeck(deck: Deck) {
-        console.log("Selected deck:", deck.name);
-        // Add your selection logic here
-    }
+    ]);
 
     onMount(() => {
         // Any initialization code if needed
     });
 </script>
 
-<div></div>
+<div class="overflow-hidden pl-1">
+    <ul class="space-y-1 overflow-y-scroll max-h-full pr-2">
+        <h3 class="font-semibold mb-2">Decks</h3>
+
+        {#each decks as deck (deck.id)}
+            <DeckItem {deck} />
+        {/each}
+
+        <button class="btn-primary w-full flex-row-gap">
+            <Plus class="w-4 h-4" /> New deck
+        </button>
+    </ul>
+</div>

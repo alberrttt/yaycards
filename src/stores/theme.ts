@@ -13,7 +13,17 @@ const getInitialTheme = () => {
 };
 
 export const theme = writable<'dark' | 'light'>(getInitialTheme() as any);
-
+export function applyClass(newTheme: 'dark' | 'light') {
+    if (newTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        // remove light
+        document.documentElement.classList.remove('light');
+    } else {
+        document.documentElement.classList.remove('dark');
+        // add light
+        document.documentElement.classList.add('light');
+    }
+}
 // Update theme and persist to localStorage
 export function toggleTheme() {
     theme.update(currentTheme => {
@@ -22,15 +32,7 @@ export function toggleTheme() {
             localStorage.setItem('theme', newTheme);
 
             // Apply theme to document
-            if (newTheme === 'dark') {
-                document.documentElement.classList.add('dark');
-                // remove light
-                document.documentElement.classList.remove('light');
-            } else {
-                document.documentElement.classList.remove('dark');
-                // add light
-                document.documentElement.classList.add('light');
-            }
+            applyClass(newTheme);
         }
         return newTheme;
     });

@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "identifier": "com.yaycards.app",
   "build": {
-    "beforeDevCommand": "pnpm dev",
+    "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "pnpm build",
     "frontendDist": "../build"
@@ -13,8 +13,17 @@
     "windows": [
       {
         "title": "yaycards",
-        "width": 800,
-        "height": 600
+        "width": 900,
+        "height": 700,
+        "minWidth": 600,
+        "minHeight": 400,
+        "transparent": true,
+        "maximizable": true,
+        "closable": true,
+        "minimizable": true,
+        "shadow": true,
+        "center": true,
+        "theme": "Light"
       }
     ],
     "security": {
