@@ -35,15 +35,12 @@
     {/each}
 
     {#if decksList.length === 0}
-      <div class="text-gray-500 dark:text-gray-400 text-xs">
+      <div class="text-caption">
         No decks yet. <br /> Create one below.
       </div>
     {/if}
 
-    <button
-      class="w-full flex items-center justify-center gap-2 px-3 py-2 mt-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-      onclick={handleNewDeckClick}
-    >
+    <button class="btn-primary w-full mt-2" onclick={handleNewDeckClick}>
       <Plus class="w-4 h-4" /> New deck
     </button>
   </ul>

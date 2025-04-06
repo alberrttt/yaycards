@@ -47,7 +47,7 @@
 <nav
   bind:this={nav}
   ontransitionend={handleTransitionEnd}
-  class="flex flex-col gap-2 p-4 h-full bg-white dark:bg-gray-900 w-64 transition-all rounded-xl"
+  class="sidebar"
   style:transform={$sidebarVisible
     ? "translateX(0)"
     : `translateX(-${nav_pos}px)`}
@@ -61,10 +61,7 @@
           ? "Switch to light mode"
           : "Switch to dark mode"}
       >
-        <button
-          class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-          onclick={toggleTheme}
-        >
+        <button class="btn-icon" onclick={toggleTheme}>
           {#if $theme === "dark"}
             <Sun size={18} />
           {:else}
@@ -73,10 +70,7 @@
         </button>
       </Tip>
       <Tip title="Toggle sidebar">
-        <button
-          class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-          onclick={toggle_sidebar}
-        >
+        <button class="btn-icon" onclick={toggle_sidebar}>
           <ArrowLeftToLine size={18} strokeWidth={1.5} />
         </button>
       </Tip>
@@ -85,14 +79,14 @@
 
   <!-- search -->
   <button
-    class="flex items-center gap-2 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md w-full text-xs"
+    class="btn-primary text-xs w-full"
     onclick={() => {
       console.log("Search button clicked");
     }}
   >
     <Search class="w-3 h-3" />
     <span class="flex-grow text-left">Search</span>
-    <span class="opacity-50">Ctrl + K</span>
+    <span class="text-caption">Ctrl + K</span>
   </button>
 
   <div class="flex flex-col gap-1 mt-2">
@@ -115,6 +109,6 @@
       onclick={() => setActiveTab("newCards")}
     />
   </div>
-  <div class="border-t border-neutral-200 dark:border-neutral-700 my-1"></div>
+  <div class="divider"></div>
   <Decks />
 </nav>

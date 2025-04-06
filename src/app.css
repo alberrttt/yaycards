@@ -43,7 +43,6 @@
 
     body {
         font-feature-settings: "rlig" 1, "calt" 1;
-
         @apply font-roboto;
     }
 
@@ -74,9 +73,97 @@
     }
 }
 
+/* Design Tokens */
 @layer components {
+    /* Typography */
+    .text-title {
+        @apply text-2xl font-bold;
+    }
     
+    .text-subtitle {
+        @apply text-xl font-semibold;
+    }
+    
+    .text-body {
+        @apply text-sm;
+    }
+    
+    .text-caption {
+        @apply text-xs text-gray-500 dark:text-gray-400;
+    }
+    
+    /* Containers */
+    .card {
+        @apply bg-white dark:bg-gray-800 rounded-lg shadow-md;
+    }
+    
+    .card-hover {
+        @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:bg-amber-100/30 dark:hover:bg-amber-800/20 transition-all;
+    }
+    
+    .container-padding {
+        @apply p-6;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+        @apply px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md;
+    }
+    
+    .btn-secondary {
+        @apply px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700;
+    }
+    
+    .btn-accent {
+        @apply px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500;
+    }
+    
+    .btn-icon {
+        @apply p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800;
+    }
+    
+    .btn-ghost {
+        @apply p-1.5 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700;
+    }
+    
+    /* Form Elements */
+    .input-field {
+        @apply w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-gray-700 dark:text-white;
+    }
+    
+    /* Layout */
+    .divider {
+        @apply border-t border-neutral-200 dark:border-neutral-700 my-1;
+    }
+    
+    /* Status Colors */
+    .status-overdue {
+        @apply text-red-500 dark:text-red-400;
+    }
+    
+    .status-due-today {
+        @apply text-amber-600 dark:text-amber-400;
+    }
+    
+    .status-upcoming {
+        @apply text-orange-500 dark:text-orange-400;
+    }
+    
+    .status-completed {
+        @apply text-green-600 dark:text-green-400;
+    }
+    
+    /* Tags */
+    .tag {
+        @apply px-2 py-0.5 text-xs rounded-full bg-amber-100 dark:bg-amber-800/40 text-amber-800 dark:text-amber-200;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+        @apply flex flex-col gap-2 p-4 h-full bg-white dark:bg-gray-900 w-64 transition-all rounded-xl;
+    }
 }
+
 @theme {
     --font-roboto: 'Roboto', sans-serif;
 }

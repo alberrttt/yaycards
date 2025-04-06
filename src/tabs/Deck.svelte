@@ -112,17 +112,13 @@
   <div class="flex flex-col items-end justify-between">
     <div class="flex gap-1">
       <Tip title="Edit card">
-        <button
-          class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
+        <button class="btn-icon p-1">
           <Edit class="w-3.5 h-3.5" />
         </button>
       </Tip>
 
       <Tip title="Delete card">
-        <button
-          class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500 dark:text-red-400"
-        >
+        <button class="btn-icon p-1 status-overdue">
           <Trash2 class="w-3.5 h-3.5" />
         </button>
       </Tip>
@@ -134,21 +130,17 @@
   </div>
 {/snippet}
 {#snippet card_item(card: Card)}
-  <div
-    class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:bg-amber-100/30 dark:hover:bg-amber-800/20 transition-all cursor-pointer"
-  >
+  <div class="card-hover p-4 cursor-pointer">
     <div class="flex justify-between">
       <div class="flex-1">
         <h3 class="font-medium">{card.front}</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+        <p class="text-body text-gray-600 dark:text-gray-400 mt-1">
           {card.back}
         </p>
 
         <div class="flex gap-2 mt-2">
           {#each card.tags as tag}
-            <span
-              class="px-2 py-0.5 text-xs rounded-full bg-amber-100 dark:bg-amber-800/40 text-amber-800 dark:text-amber-200"
-            >
+            <span class="tag">
               {tag}
             </span>
           {/each}
@@ -162,8 +154,8 @@
 {#snippet main(currentDeck: Deck)}
   <div class="flex justify-between items-center">
     <div>
-      <h1 class="text-2xl font-bold">{currentDeck.name}</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">
+      <h1 class="text-title">{currentDeck.name}</h1>
+      <p class="text-caption">
         {cards.length} cards • {cards.filter(
           (c) => c.dueDate && c.dueDate <= new Date()
         ).length} due today
@@ -172,30 +164,21 @@
 
     <div class="flex gap-2">
       <Tip title="Study this deck">
-        <button
-          class="px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-          onclick={startStudySession}
-        >
+        <button class="btn-primary" onclick={startStudySession}>
           <BookOpen class="w-4 h-4" />
           <span>Study</span>
         </button>
       </Tip>
 
       <Tip title="Add a new card">
-        <button
-          class="px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-          onclick={addNewCard}
-        >
+        <button class="btn-primary" onclick={addNewCard}>
           <Plus class="w-4 h-4" />
           <span>New Card</span>
         </button>
       </Tip>
 
       <Tip title="Edit deck settings">
-        <button
-          class="p-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
-          onclick={editDeck}
-        >
+        <button class="btn-ghost" onclick={editDeck}>
           <Settings class="w-4 h-4" />
         </button>
       </Tip>
@@ -212,14 +195,9 @@
     {/each}
 
     {#if cards.length === 0}
-      <div
-        class="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400"
-      >
+      <div class="flex flex-col items-center justify-center h-64 text-caption">
         <p class="mb-4">No cards in this deck yet</p>
-        <button
-          class="px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-          onclick={addNewCard}
-        >
+        <button class="btn-primary" onclick={addNewCard}>
           <Plus class="w-4 h-4" />
           <span>Add your first card</span>
         </button>
@@ -233,11 +211,9 @@
   <div
     class="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center p-4"
   >
-    <div
-      class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-lg w-full p-4"
-    >
+    <div class="card container-padding max-w-lg w-full">
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold">Create New Card</h3>
+        <h3 class="text-subtitle">Create New Card</h3>
         <button
           class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           onclick={closeNewCardModal}
@@ -256,7 +232,7 @@
           </label>
           <textarea
             id="cardFront"
-            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-gray-700 dark:text-white"
+            class="input-field"
             bind:value={newCardFront}
             placeholder="Enter the question or front of the card"
             rows="3"
@@ -272,7 +248,7 @@
           </label>
           <textarea
             id="cardBack"
-            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 dark:bg-gray-700 dark:text-white"
+            class="input-field"
             bind:value={newCardBack}
             placeholder="Enter the answer or back of the card"
             rows="3"
@@ -282,14 +258,14 @@
         <div class="flex justify-end gap-2">
           <button
             type="button"
-            class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            class="btn-secondary"
             onclick={closeNewCardModal}
           >
             Cancel
           </button>
           <button
             type="submit"
-            class="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+            class="btn-accent"
             disabled={!newCardFront.trim() || !newCardBack.trim()}
           >
             Create
@@ -311,9 +287,7 @@
     <!-- Deck Header Section -->
     {@render main(currentDeck)}
   {:else}
-    <div
-      class="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400"
-    >
+    <div class="flex flex-col items-center justify-center h-64 text-caption">
       <p>No deck selected</p>
     </div>
   {/if}

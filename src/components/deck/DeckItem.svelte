@@ -52,11 +52,11 @@
       aria-label="Select deck"
     >
       <span class="flex items-center justify-between flex-1">
-        <div class="flex items-center gap-2 text-sm">
+        <div class="flex items-center gap-2 text-body">
           <Book size={10} />
           <span>{deck.name}</span>
         </div>
-        <span class="text-xs text-gray-500">
+        <span class="text-caption">
           {deck.subDecks?.length || 0}
         </span>
       </span>

@@ -61,18 +61,15 @@
 </script>
 
 <div
-  class="rounded-xl flex justify-between items-center w-full p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 "
+  class="rounded-xl flex justify-between items-center w-full p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800"
 >
   <div class="flex items-center">
     {#if !$sidebarVisible}
-      <button
-        class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-        onclick={toggleSidebar}
-      >
+      <button class="btn-icon" onclick={toggleSidebar}>
         <Menu size={18} />
       </button>
     {/if}
-    <h1 class={`${$sidebarVisible ? "ml-4" : "ml-2"} text-xl font-bold`}>
+    <h1 class={`${$sidebarVisible ? "ml-4" : "ml-2"} text-title`}>
       {tab_title}
     </h1>
   </div>
