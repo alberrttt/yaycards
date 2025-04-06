@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { modalState, closeModal } from "@stores/modal";
+  import { modalState, closeModal } from "#stores/modal";
   import { X } from "@lucide/svelte";
   let ComponentToShow = $derived($modalState.component);
   let componentProps = $derived($modalState.props ?? {});

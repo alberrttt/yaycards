@@ -8,7 +8,7 @@
     BarChart,
     ChartColumn,
   } from "@lucide/svelte";
-  import Tip from "../ui/Tip.svelte";
+  import Tip from "#components/ui/Tip.svelte";
 </script>
 
 <div

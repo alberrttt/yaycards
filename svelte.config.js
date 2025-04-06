@@ -16,14 +16,14 @@ const config = {
     adapter: adapter(),
     alias: {
       '@': resolve(__dirname, './src'),
-      '@components': resolve(__dirname, './src/components'),
-      '@stores': resolve(__dirname, './src/stores'),
+      '#components': resolve(__dirname, './src/components'),
+      '#stores': resolve(__dirname, './src/stores'),
       '@tabs': resolve(__dirname, './src/tabs')
     }
   },
   compilerOptions: {
     runes: true,
-    
+
   }
 };
 

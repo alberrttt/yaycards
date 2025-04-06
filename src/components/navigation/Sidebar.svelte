@@ -12,13 +12,13 @@
     Moon,
     Sun,
   } from "@lucide/svelte";
-  import Tip from "../ui/Tip.svelte";
+  import Tip from "#components/ui/Tip.svelte";
   import Tab from "./Tab.svelte";
-  import { sidebarVisible } from "../../stores/sidebar";
-  import { activeTab, type TabType } from "../../stores/tabs";
-  import Decks from "../deck/Decks.svelte";
+  import { sidebarVisible } from "#stores/sidebar";
+  import { activeTab, type TabType } from "#stores/tabs";
+  import Decks from "#components/deck/Decks.svelte";
   import { createEventDispatcher } from "svelte";
-  import { theme, toggleTheme } from "../../stores/theme";
+  import { theme, toggleTheme } from "#stores/theme";
 
   let nav = $state<HTMLElement>();
   const dispatch = createEventDispatcher();
@@ -49,13 +49,12 @@
 <nav
   bind:this={nav}
   ontransitionend={handleTransitionEnd}
-  class="flex-col-gap card-container min-h-full standard-transition gap-2 px-2 min-h-max"
-  style:transform={$sidebarVisible
-    ? "translateX(0)"
-    : `translateX(-${nav_pos}px)`}
+  class="flex-col-gap card-container standard-transition gap-2 px-2 min-h-max"
+  style:transform={// There is a lot of shitfuckery with this. Idk how to get a smooth transition for the sidebar to slide left when its hidden
+  $sidebarVisible ? "translateX(0)" : `translateX(-${nav_pos}px)`}
   style:opacity={$sidebarVisible ? "1" : "0"}
 >
-  <div class="w-full flex-between rounded-lg relative">
+  <div class="flex-between rounded-lg relative">
     <p class="pl-1">yaycards</p>
     <span class="row-items">
       <Tip
@@ -81,14 +80,14 @@
 
   <!-- search -->
   <button
-    class="btn-primary w-full flex-row-gap text-sm"
+    class="btn-primary flex-row-gap text-xs"
     onclick={() => {
       console.log("Search button clicked");
     }}
   >
-    <Search class="w-4 h-4" />
+    <Search class="w-3 h-3" />
     <span class="flex-grow text-left">Search</span>
-    <span class="text-sm opacity-50">Ctrl + K</span>
+    <span class="opacity-50">Ctrl + K</span>
   </button>
 
   <div class="p-1 sidebar-panel gap-1 flex flex-col">

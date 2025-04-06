@@ -1,5 +1,7 @@
 <script lang="ts">
-    const { title } = $props<{ title: string }>();
+  import type { Snippet } from "svelte";
+
+  const { children, title } = $props<{ children: Snippet; title: string }>();
 </script>
 
-<slot />
+{@render children()}

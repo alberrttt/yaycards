@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { ArrowRight, Book, MoveRight, Plus, X } from "@lucide/svelte";
-  import type { Deck } from "../../types";
+  import type { Deck } from "@/types";
   import DeckItem from "./DeckItem.svelte";
-  import { decks } from "../../stores/decks";
-  import { activeTab } from "../../stores/tabs";
-  import { openModal } from "../../stores/modal";
+  import { decks } from "#stores/decks";
+  import { activeTab } from "#stores/tabs";
+  import { openModal } from "#stores/modal";
 
   // Subscribe to the decks store
   let decksList = $state<Deck[]>([]);
@@ -27,7 +27,7 @@
 </script>
 
 <div class="overflow-hidden pl-1">
-  <ul class="space-y-1 overflow-y-scroll max-h-full pr-2">
+  <ul class="space-y-1 overflow-y-scroll pr-2">
     <h3 class="font-semibold mb-2">Decks</h3>
 
     {#each decksList as deck (deck.id)}
@@ -35,8 +35,8 @@
     {/each}
 
     {#if decksList.length === 0}
-      <div class="text-gray-500 dark:text-gray-400 text-sm p-2">
-        No decks yet. Create one below.
+      <div class="text-gray-500 dark:text-gray-400 text-xs">
+        No decks yet. <br /> Create one below.
       </div>
     {/if}
 

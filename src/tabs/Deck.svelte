@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Plus, BookOpen, Settings, Trash2, Edit, X } from "@lucide/svelte";
-  import { activeDeckId } from "../stores/tabs";
-  import type { Card, Deck } from "../types";
-  import Tip from "../components/ui/Tip.svelte";
+  import { activeDeckId } from "#stores/tabs";
+  import type { Card, Deck } from "@/types";
+  import Tip from "#components/ui/Tip.svelte";
   import { onMount } from "svelte";
-  import { createExampleCards, getCardDueStatusClass } from "../util";
-  import DeckActions from "../components/deck/DeckActions.svelte";
-  import { decks } from "../stores/decks";
+  import { createExampleCards, getCardDueStatusClass } from "@/util";
+  import DeckActions from "#components/deck/DeckActions.svelte";
+  import { decks } from "#stores/decks";
 
   // Current deck state derived from the activeDeckId
   let currentDeck = $state<Deck | null>(null);
@@ -50,7 +50,8 @@
     openNewCardModal();
   }
 
-  function createNewCard() {
+  function createNewCard(event: Event) {
+    event.preventDefault();
     if (newCardFront.trim() && newCardBack.trim()) {
       const newCard: Card = {
         id: crypto.randomUUID(),
@@ -167,21 +168,21 @@
 
     <div class="flex gap-2">
       <Tip title="Study this deck">
-        <button class="btn btn-primary" on:click={startStudySession}>
+        <button class="btn btn-primary" onclick={startStudySession}>
           <BookOpen class="w-4 h-4" />
           <span>Study</span>
         </button>
       </Tip>
 
       <Tip title="Add a new card">
-        <button class="btn btn-primary" on:click={addNewCard}>
+        <button class="btn btn-primary" onclick={addNewCard}>
           <Plus class="w-4 h-4" />
           <span>New Card</span>
         </button>
       </Tip>
 
       <Tip title="Edit deck settings">
-        <button class="btn" on:click={editDeck}>
+        <button class="btn" onclick={editDeck}>
           <Settings class="w-4 h-4" />
         </button>
       </Tip>
@@ -202,7 +203,7 @@
         class="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400"
       >
         <p class="mb-4">No cards in this deck yet</p>
-        <button class="btn btn-primary" on:click={addNewCard}>
+        <button class="btn btn-primary" onclick={addNewCard}>
           <Plus class="w-4 h-4" />
           <span>Add your first card</span>
         </button>
@@ -223,13 +224,13 @@
         <h3 class="text-lg font-semibold">Create New Card</h3>
         <button
           class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-          on:click={closeNewCardModal}
+          onclick={closeNewCardModal}
         >
           <X class="w-5 h-5" />
         </button>
       </div>
 
-      <form on:submit|preventDefault={createNewCard}>
+      <form onsubmit={createNewCard}>
         <div class="mb-4">
           <label
             for="cardFront"
@@ -243,7 +244,6 @@
             bind:value={newCardFront}
             placeholder="Enter the question or front of the card"
             rows="3"
-            autofocus
           ></textarea>
         </div>
 
@@ -267,7 +267,7 @@
           <button
             type="button"
             class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-            on:click={closeNewCardModal}
+            onclick={closeNewCardModal}
           >
             Cancel
           </button>

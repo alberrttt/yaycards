@@ -1,9 +1,9 @@
 <script lang="ts">
   import { ArrowRight, Book } from "@lucide/svelte";
-  import type { Deck } from "../../types";
+  import type { Deck } from "@/types";
   let { deck } = $props<{ deck: Deck }>();
   import DeckItem from "./DeckItem.svelte";
-  import { activeTab, activeDeckId } from "../../stores/tabs";
+  import { activeTab, activeDeckId } from "#stores/tabs";
   import type { EventHandler } from "svelte/elements";
   let isOpen = $state(false);
 

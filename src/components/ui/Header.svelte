@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Ham, Menu, Sun, Moon } from "@lucide/svelte";
   import { page } from "$app/stores";
-  import { sidebarVisible } from "../../stores/sidebar";
-  import { applyClass, theme, toggleTheme } from "../../stores/theme";
+  import { sidebarVisible } from "#stores/sidebar";
+  import { applyClass, theme, toggleTheme } from "#stores/theme";
   import Tip from "./Tip.svelte";
   import { onMount } from "svelte";
-  import { activeTab, activeDeckId } from "../../stores/tabs";
-  import type { Deck } from "../../types";
+  import { activeTab, activeDeckId } from "#stores/tabs";
+  import type { Deck } from "@/types";
 
   // Get deck info for header title
   let currentDeck = $state<Deck | null>(null);
