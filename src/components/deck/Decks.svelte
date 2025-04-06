@@ -1,0 +1,50 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { ArrowRight, Book, MoveRight, Plus, X } from "@lucide/svelte";
+  import type { Deck } from "../../types";
+  import DeckItem from "./DeckItem.svelte";
+  import { decks } from "../../stores/decks";
+  import { activeTab } from "../../stores/tabs";
+  import { openModal } from "../../stores/modal";
+
+  // Subscribe to the decks store
+  let decksList = $state<Deck[]>([]);
+
+  // Set up modal state
+
+  // Subscribe to the decks store
+  const unsubscribe = decks.subscribe((value) => {
+    decksList = value;
+  });
+
+  onMount(() => {
+    return () => {
+      unsubscribe();
+    };
+  });
+
+  function handleNewDeckClick() {}
+</script>
+
+<div class="overflow-hidden pl-1">
+  <ul class="space-y-1 overflow-y-scroll max-h-full pr-2">
+    <h3 class="font-semibold mb-2">Decks</h3>
+
+    {#each decksList as deck (deck.id)}
+      <DeckItem {deck} />
+    {/each}
+
+    {#if decksList.length === 0}
+      <div class="text-gray-500 dark:text-gray-400 text-sm p-2">
+        No decks yet. Create one below.
+      </div>
+    {/if}
+
+    <button
+      class="btn-primary w-full flex-row-gap mt-2"
+      onclick={handleNewDeckClick}
+    >
+      <Plus class="w-4 h-4" /> New deck
+    </button>
+  </ul>
+</div>
