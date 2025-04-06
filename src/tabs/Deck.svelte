@@ -112,13 +112,17 @@
   <div class="flex flex-col items-end justify-between">
     <div class="flex gap-1">
       <Tip title="Edit card">
-        <button class="btn p-1">
+        <button
+          class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
           <Edit class="w-3.5 h-3.5" />
         </button>
       </Tip>
 
       <Tip title="Delete card">
-        <button class="btn p-1 text-red-500 dark:text-red-400">
+        <button
+          class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500 dark:text-red-400"
+        >
           <Trash2 class="w-3.5 h-3.5" />
         </button>
       </Tip>
@@ -131,7 +135,7 @@
 {/snippet}
 {#snippet card_item(card: Card)}
   <div
-    class="card-container p-4 hover:bg-amber-100/30 dark:hover:bg-amber-800/20 transition-all cursor-pointer"
+    class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 hover:bg-amber-100/30 dark:hover:bg-amber-800/20 transition-all cursor-pointer"
   >
     <div class="flex justify-between">
       <div class="flex-1">
@@ -168,21 +172,30 @@
 
     <div class="flex gap-2">
       <Tip title="Study this deck">
-        <button class="btn btn-primary" onclick={startStudySession}>
+        <button
+          class="px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+          onclick={startStudySession}
+        >
           <BookOpen class="w-4 h-4" />
           <span>Study</span>
         </button>
       </Tip>
 
       <Tip title="Add a new card">
-        <button class="btn btn-primary" onclick={addNewCard}>
+        <button
+          class="px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+          onclick={addNewCard}
+        >
           <Plus class="w-4 h-4" />
           <span>New Card</span>
         </button>
       </Tip>
 
       <Tip title="Edit deck settings">
-        <button class="btn" onclick={editDeck}>
+        <button
+          class="p-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+          onclick={editDeck}
+        >
           <Settings class="w-4 h-4" />
         </button>
       </Tip>
@@ -203,7 +216,10 @@
         class="flex flex-col items-center justify-center h-64 text-gray-500 dark:text-gray-400"
       >
         <p class="mb-4">No cards in this deck yet</p>
-        <button class="btn btn-primary" onclick={addNewCard}>
+        <button
+          class="px-3 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+          onclick={addNewCard}
+        >
           <Plus class="w-4 h-4" />
           <span>Add your first card</span>
         </button>

@@ -4,7 +4,7 @@
   let { deck } = $props<{ deck: Deck }>();
   import DeckItem from "./DeckItem.svelte";
   import { activeTab, activeDeckId } from "#stores/tabs";
-  import type { EventHandler } from "svelte/elements";
+
   let isOpen = $state(false);
 
   function toggleOpen(e: MouseEvent | KeyboardEvent) {
@@ -19,15 +19,20 @@
     $activeTab = "deck";
     console.log("Selected deck:", deck.name, "with ID:", deck.id);
   }
+
+  // Derive active state
+  let isActive = $derived($activeDeckId === deck.id && $activeTab === "deck");
 </script>
 
 <div class="flex flex-col w-full">
   <span
-    class="row-items w-full hover:bg-orange-300/10 dark:hover:bg-orange-800/10 flex cursor-pointer p-[1px] rounded-lg"
+    class="flex items-center py-1 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 {isActive
+      ? 'bg-gray-100 dark:bg-gray-800'
+      : ''}"
   >
     <button
       type="button"
-      class="p-1"
+      class="p-1 transition-all duration-150"
       onclick={(e) => toggleOpen(e)}
       onkeydown={(e) => e.key === "Enter" && toggleOpen(e)}
       aria-expanded={isOpen}
@@ -41,12 +46,12 @@
     </button>
     <button
       type="button"
-      class="row-items w-full flex cursor-pointer"
+      class="flex items-center w-full"
       onclick={selectDeck}
       onkeydown={(e) => e.key === "Enter" && selectDeck()}
       aria-label="Select deck"
     >
-      <span class="row-items justify-between flex-1">
+      <span class="flex items-center justify-between flex-1">
         <div class="flex items-center gap-2 text-sm">
           <Book size={10} />
           <span>{deck.name}</span>

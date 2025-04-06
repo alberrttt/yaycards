@@ -1,27 +1,27 @@
 <script lang="ts">
-    interface Props {
-        onclick: (e: MouseEvent) => void;
-        icon: any; // The Lucide icon component
-        label: string;
-        active?: boolean;
-        href?: string;
-    }
-    let { onclick, icon, label, active = false, href = "#" }: Props = $props();
-    let Icon = icon;
-    function handleClick(e: MouseEvent) {
-        e.preventDefault();
+  interface Props {
+    onclick: (e: MouseEvent) => void;
+    icon: any; // The Lucide icon component
+    label: string;
+    active?: boolean;
+    href?: string;
+  }
+  let { onclick, icon, label, active = false, href = "#" }: Props = $props();
+  let Icon = icon;
+  function handleClick(e: MouseEvent) {
+    e.preventDefault();
 
-        onclick(e);
-    }
+    onclick(e);
+  }
 </script>
 
 <a
-    {href}
-    class="transition-colors rounded-lg p-1 cursor-pointer {active
-        ? 'bg-orange-300/30 dark:bg-orange-900/30'
-        : ''} hover:bg-orange-300/30 dark:hover:bg-orange-800/30 row-items text-xs gap-2"
-    onclick={handleClick}
+  {href}
+  class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors {active
+    ? 'bg-gray-100 dark:bg-gray-800'
+    : ''}"
+  onclick={handleClick}
 >
-    <Icon size={12} />
-    <p>{label}</p>
+  <Icon size={12} />
+  <p>{label}</p>
 </a>

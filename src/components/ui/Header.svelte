@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { Ham, Menu, Sun, Moon } from "@lucide/svelte";
-  import { page } from "$app/stores";
+  import { Menu, Sun, Moon } from "@lucide/svelte";
   import { sidebarVisible } from "#stores/sidebar";
   import { applyClass, theme, toggleTheme } from "#stores/theme";
   import Tip from "./Tip.svelte";
@@ -14,7 +13,6 @@
   // Function to fetch deck info based on ID
   async function fetchDeckInfo(deckId: string) {
     // Mock fetch - in real app would fetch from database/storage
-    // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Dummy data - replace with actual data source
@@ -62,15 +60,24 @@
   });
 </script>
 
-<div class="flex flex-row gap-2 items-center justify-between w-full">
-  <div class={`flex items-center w-full`}>
+<div
+  class="rounded-xl flex justify-between items-center w-full p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 "
+>
+  <div class="flex items-center">
     {#if !$sidebarVisible}
-      <button class="btn" onclick={toggleSidebar}>
-        <Menu class="size-4" />
+      <button
+        class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+        onclick={toggleSidebar}
+      >
+        <Menu size={18} />
       </button>
     {/if}
-    <h1 class={`${$sidebarVisible ? "ml-4" : "ml-2"} text-2xl font-bold`}>
+    <h1 class={`${$sidebarVisible ? "ml-4" : "ml-2"} text-xl font-bold`}>
       {tab_title}
     </h1>
+  </div>
+
+  <div class="flex gap-2">
+    <!-- Additional header actions can go here -->
   </div>
 </div>

@@ -41,7 +41,7 @@
     {/if}
 
     <button
-      class="btn-primary w-full flex-row-gap mt-2"
+      class="w-full flex items-center justify-center gap-2 px-3 py-2 mt-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
       onclick={handleNewDeckClick}
     >
       <Plus class="w-4 h-4" /> New deck

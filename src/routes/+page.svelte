@@ -24,21 +24,14 @@
 
   // Create a state variable for nav_pos
   let nav_pos = $state(0);
-
-  // Create a bound prop object that can be passed to Sidebar
-  let sidebarProps = $derived({
-    nav_pos: nav_pos,
+  $effect(() => {
+    console.debug("nav_pos", nav_pos);
   });
-
-  // Create a function to update nav_pos from Sidebar
-  function updateNavPos(newValue: number) {
-    nav_pos = newValue;
-  }
 </script>
 
 <ModalWrapper />
 <div class="relative h-screen flex p-6 gap-6 overflow-hidden">
-  <Sidebar {nav_pos} on:updateNavPos={(e) => updateNavPos(e.detail)} />
+  <Sidebar bind:nav_pos />
   <main
     class="flex flex-col transition-all duration-300 ease-in-out max-w-full flex-1 box-border overflow-hidden"
     style={$sidebarVisible

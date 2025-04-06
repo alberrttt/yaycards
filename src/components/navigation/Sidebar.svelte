@@ -3,8 +3,6 @@
     AlarmClockCheck,
     ArrowLeftToLine,
     Cog,
-    Ham,
-    HamIcon,
     Search,
     SquareKanbanIcon,
     Plus,
@@ -17,11 +15,9 @@
   import { sidebarVisible } from "#stores/sidebar";
   import { activeTab, type TabType } from "#stores/tabs";
   import Decks from "#components/deck/Decks.svelte";
-  import { createEventDispatcher } from "svelte";
   import { theme, toggleTheme } from "#stores/theme";
 
   let nav = $state<HTMLElement>();
-  const dispatch = createEventDispatcher();
 
   function toggle_sidebar() {
     $sidebarVisible = !$sidebarVisible;
@@ -34,14 +30,16 @@
   function handleTransitionEnd(event: TransitionEvent) {}
 
   // Accept nav_pos as a prop
-  let { nav_pos } = $props();
+  let { nav_pos = $bindable() } = $props<{ nav_pos: number }>();
 
   $effect(() => {
     if (nav) {
       // Calculate the full width including padding and any offset from the edge
       const rect = nav.getBoundingClientRect();
       // Update nav_pos and dispatch it to the parent
-      dispatch("updateNavPos", rect.right);
+      nav_pos = rect.width;
+      // Log the updated nav_pos for debugging
+      console.debug("Updated nav_pos:", nav_pos);
     }
   });
 </script>
@@ -49,30 +47,37 @@
 <nav
   bind:this={nav}
   ontransitionend={handleTransitionEnd}
-  class="flex-col-gap card-container standard-transition gap-2 px-2 min-h-max"
-  style:transform={// There is a lot of shitfuckery with this. Idk how to get a smooth transition for the sidebar to slide left when its hidden
-  $sidebarVisible ? "translateX(0)" : `translateX(-${nav_pos}px)`}
+  class="flex flex-col gap-2 p-4 h-full bg-white dark:bg-gray-900 w-64 transition-all rounded-xl"
+  style:transform={$sidebarVisible
+    ? "translateX(0)"
+    : `translateX(-${nav_pos}px)`}
   style:opacity={$sidebarVisible ? "1" : "0"}
 >
-  <div class="flex-between rounded-lg relative">
-    <p class="pl-1">yaycards</p>
-    <span class="row-items">
+  <div class="flex justify-between items-center relative">
+    <p class="pl-1 text-lg font-semibold">yaycards</p>
+    <span class="flex items-center">
       <Tip
         title={$theme === "dark"
           ? "Switch to light mode"
           : "Switch to dark mode"}
       >
-        <button class="btn rounded-full p-3" onclick={toggleTheme}>
+        <button
+          class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          onclick={toggleTheme}
+        >
           {#if $theme === "dark"}
-            <Sun size={20} />
+            <Sun size={18} />
           {:else}
-            <Moon size={20} />
+            <Moon size={18} />
           {/if}
         </button>
       </Tip>
       <Tip title="Toggle sidebar">
-        <button class="btn" onclick={toggle_sidebar}>
-          <ArrowLeftToLine strokeWidth={1.5} />
+        <button
+          class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          onclick={toggle_sidebar}
+        >
+          <ArrowLeftToLine size={18} strokeWidth={1.5} />
         </button>
       </Tip>
     </span>
@@ -80,7 +85,7 @@
 
   <!-- search -->
   <button
-    class="btn-primary flex-row-gap text-xs"
+    class="flex items-center gap-2 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md w-full text-xs"
     onclick={() => {
       console.log("Search button clicked");
     }}
@@ -90,7 +95,7 @@
     <span class="opacity-50">Ctrl + K</span>
   </button>
 
-  <div class="p-1 sidebar-panel gap-1 flex flex-col">
+  <div class="flex flex-col gap-1 mt-2">
     <Tab
       icon={SquareKanbanIcon}
       label="Dashboard"
@@ -103,7 +108,6 @@
       active={$activeTab === "dueToday"}
       onclick={() => setActiveTab("dueToday")}
     />
-
     <Tab
       icon={Newspaper}
       label="New Cards"
@@ -111,6 +115,6 @@
       onclick={() => setActiveTab("newCards")}
     />
   </div>
-  <span class="border-t-1 border-gray-700/20"></span>
+  <div class="border-t border-neutral-200 dark:border-neutral-700 my-1"></div>
   <Decks />
 </nav>
