@@ -3,54 +3,10 @@
   import { sidebarVisible } from "#stores/sidebar";
   import { applyClass, theme, toggleTheme } from "#stores/theme";
   import Tip from "./Tip.svelte";
-  import { onMount } from "svelte";
+  import { onMount, type Snippet } from "svelte";
   import { activeTab, activeDeckId } from "#stores/tabs";
   import type { Deck } from "@/types";
-
-  // Get deck info for header title
-  let currentDeck = $state<Deck | null>(null);
-
-  // Function to fetch deck info based on ID
-  async function fetchDeckInfo(deckId: string) {
-    // Mock fetch - in real app would fetch from database/storage
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    // Dummy data - replace with actual data source
-    const decks = [
-      { id: "1", name: "Mathematics" },
-      { id: "2", name: "Languages" },
-      { id: "3", name: "History" },
-      { id: "1-1", name: "Algebra" },
-      { id: "1-2", name: "Geometry" },
-      { id: "1-3", name: "Calculus" },
-      // Add other decks as needed
-    ];
-
-    currentDeck = decks.find((d) => d.id === deckId) || null;
-  }
-
-  // Update deck info when activeDeckId changes
-  $effect(() => {
-    if ($activeTab === "deck" && $activeDeckId) {
-      fetchDeckInfo($activeDeckId);
-    } else {
-      currentDeck = null;
-    }
-  });
-
-  let tab_title = $derived.by(() => {
-    if ($activeTab === "deck" && currentDeck) {
-      return currentDeck.name;
-    }
-
-    return {
-      dashboard: "Dashboard",
-      dueToday: "Due Today",
-      newCards: "New Cards",
-      deck: "Deck",
-    }[$activeTab];
-  });
-
+  import { headerSnippet } from "@/stores/misc";
   function toggleSidebar() {
     $sidebarVisible = !$sidebarVisible;
   }
@@ -60,18 +16,15 @@
   });
 </script>
 
-<div
-  class="rounded-xl flex justify-between items-center w-full p-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800"
->
-  <div class="flex items-center">
+<div class="rounded-xl flex justify-between items-center w-full p-4 mt-6">
+  <div class="flex items-center text-lg w-full">
     {#if !$sidebarVisible}
       <button class="btn-icon" onclick={toggleSidebar}>
         <Menu size={18} />
       </button>
     {/if}
-    <h1 class={`${$sidebarVisible ? "ml-4" : "ml-2"} text-title`}>
-      {tab_title}
-    </h1>
+
+    {@render $headerSnippet?.()}
   </div>
 
   <div class="flex gap-2">

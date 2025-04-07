@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+import { svelte } from "@sveltejs/vite-plugin-svelte"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -12,7 +12,7 @@ const host = process.env.TAURI_DEV_HOST;
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [sveltekit(), tailwindcss()],
+  plugins: [sveltekit(), tailwindcss(), ],
 
   resolve: {
     alias: {

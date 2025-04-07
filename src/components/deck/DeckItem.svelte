@@ -1,11 +1,13 @@
 <script lang="ts">
   import { ArrowRight, Book } from "@lucide/svelte";
   import type { Deck } from "@/types";
-  let { deck } = $props<{ deck: Deck }>();
   import DeckItem from "./DeckItem.svelte";
   import { activeTab, activeDeckId } from "#stores/tabs";
+  import { headerSnippet } from "@/stores/misc";
+  import { decks } from "@/stores/decks.svelte";
 
   let isOpen = $state(false);
+  let { deck: currentDeck }: { deck: Deck } = $props<{ deck: Deck }>();
 
   function toggleOpen(e: MouseEvent | KeyboardEvent) {
     isOpen = !isOpen;
@@ -14,16 +16,31 @@
 
   function selectDeck() {
     // Set the active deck ID in the store
-    $activeDeckId = deck.id;
+    $activeDeckId = currentDeck.id;
     // Switch to the deck tab
     $activeTab = "deck";
-    console.log("Selected deck:", deck.name, "with ID:", deck.id);
+
+    $headerSnippet = header;
   }
 
   // Derive active state
-  let isActive = $derived($activeDeckId === deck.id && $activeTab === "deck");
+  let isActive = $derived(
+    $activeDeckId === currentDeck.id && $activeTab === "deck"
+  );
 </script>
 
+{#snippet header()}
+  <input
+    class="text-title focus:outline-none focus:ring-0 focus:border-transparent min-w-full"
+    onkeydown={(e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        e.currentTarget.blur();
+      }
+    }}
+    bind:value={currentDeck.name}
+  />
+{/snippet}
 <div class="flex flex-col w-full">
   <span
     class="flex items-center py-1 px-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 {isActive
@@ -54,18 +71,21 @@
       <span class="flex items-center justify-between flex-1">
         <div class="flex items-center gap-2 text-body">
           <Book size={10} />
-          <span>{deck.name}</span>
+          <span
+            class="truncate overflow-hidden max-w-32"
+            title={currentDeck.name}>{currentDeck.name}</span
+          >
         </div>
         <span class="text-caption">
-          {deck.subDecks?.length || 0}
+          {currentDeck.subDecks?.length || 0}
         </span>
       </span>
     </button>
   </span>
 
-  {#if isOpen && deck.subDecks && deck.subDecks.length > 0}
+  {#if isOpen && currentDeck.subDecks && currentDeck.subDecks.length > 0}
     <div class="pl-4">
-      {#each deck.subDecks as subDeck}
+      {#each currentDeck.subDecks as subDeck}
         <DeckItem deck={subDeck} />
       {/each}
     </div>

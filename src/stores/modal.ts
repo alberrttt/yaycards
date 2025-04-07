@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { Component, ComponentType } from 'svelte';
+import type { Component, ComponentType, Snippet } from 'svelte';
 
 interface ModalState {
     component: Component<any, any, any> | null;

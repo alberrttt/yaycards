@@ -11,9 +11,7 @@
   import Tip from "#components/ui/Tip.svelte";
 </script>
 
-<div
-  class="flex justify-between items-center px-2 py-3 bg-amber-50/50 dark:bg-amber-900/20 rounded-lg"
->
+<div class="flex justify-between items-center px-2 py-3 rounded-lg">
   <div class="flex gap-3">
     <button class="btn-ghost text-sm flex items-center gap-1">
       <Filter class="w-4 h-4" />

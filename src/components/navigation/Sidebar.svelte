@@ -9,13 +9,22 @@
     Newspaper,
     Moon,
     Sun,
+    ArrowRight,
+    Book,
+    MoveRight,
+    X,
   } from "@lucide/svelte";
   import Tip from "#components/ui/Tip.svelte";
   import Tab from "./Tab.svelte";
   import { sidebarVisible } from "#stores/sidebar";
   import { activeTab, type TabType } from "#stores/tabs";
-  import Decks from "#components/deck/Decks.svelte";
+  import DeckItem from "#components/deck/DeckItem.svelte";
+  import { decks } from "#stores/decks.svelte";
+  import { openModal } from "#stores/modal";
   import { theme, toggleTheme } from "#stores/theme";
+  import { dev } from "$app/environment";
+  import type { Deck } from "@/types";
+  import { Database } from "@/shim";
 
   let nav = $state<HTMLElement>();
 
@@ -39,9 +48,17 @@
       // Update nav_pos and dispatch it to the parent
       nav_pos = rect.width;
       // Log the updated nav_pos for debugging
-      console.debug("Updated nav_pos:", nav_pos);
     }
   });
+
+  function handleNewDeckClick() {
+    let deck: Deck = {
+      id: crypto.randomUUID(),
+      name: "New Deck " + ($decks.length + 1),
+      cards: [],
+    };
+    Database.createDeck(deck);
+  }
 </script>
 
 <nav
@@ -54,7 +71,7 @@
   style:opacity={$sidebarVisible ? "1" : "0"}
 >
   <div class="flex justify-between items-center relative">
-    <p class="pl-1 text-lg font-semibold">yaycards</p>
+    <p class="pl-1 text-sm font-semibold">yaycards</p>
     <span class="flex items-center">
       <Tip
         title={$theme === "dark"
@@ -110,5 +127,25 @@
     />
   </div>
   <div class="divider"></div>
-  <Decks />
+
+  <!-- Inlined Decks component -->
+  <div class="overflow-auto pl-1">
+    <ul class="space-y-1 overflow-y-scroll pr-2">
+      <h3 class="font-semibold mb-2">Decks</h3>
+
+      {#each $decks as deck (deck.id)}
+        <DeckItem {deck} />
+      {/each}
+
+      {#if $decks.length === 0}
+        <div class="text-caption pl-1">
+          No decks yet. <br /> Create one below.
+        </div>
+      {/if}
+
+      <button class="btn-primary w-full mt-2" onclick={handleNewDeckClick}>
+        <Plus class="w-4 h-4" /> New deck
+      </button>
+    </ul>
+  </div>
 </nav>
